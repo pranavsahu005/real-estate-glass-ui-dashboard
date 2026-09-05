@@ -1,6 +1,6 @@
 # Real Estate Glass UI Dashboard 🏡✨
 
-![Dashboard Verification](public/assets/dashboard_glass_verification_1788599168347.png)
+![Dashboard Preview](public/assets/reference-preview.jpeg)
 
 Welcome to the **Infinity Core Bhopal - Executive TV Dashboard**. This project is a premium, real-time, TV-first executive analytics dashboard designed exclusively for luxury real estate operations.
 
