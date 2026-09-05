@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(rgba(116, 94, 68, .18), rgba(116, 94, 68, .18)),
+    url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=85")
+    center / cover;
+  font-family: Inter, Arial, sans-serif;
+}
+
+/* =========================
+   GLASS CARD
+========================= */
+
+.glass-card {
+  position: relative;
+  width: min(430px, 90vw);
+  min-height: 650px;
+  padding: 32px 34px 28px;
+
+  border-radius: 34px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.78),
+      rgba(247,242,232,.62)
+    );
+
+  border: 1px solid rgba(255,255,255,.82);
+
+  box-shadow:
+    0 28px 70px rgba(55,43,29,.18),
+    0 8px 24px rgba(55,43,29,.08),
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -1px 0 rgba(160,143,116,.08);
+
+  backdrop-filter: blur(24px) saturate(115%);
+  -webkit-backdrop-filter: blur(24px) saturate(115%);
+
+  color: #37332d;
+  overflow: hidden;
+}
+
+/* soft glass reflection */
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(255,255,255,.72),
+      transparent 32%
+    ),
+    linear-gradient(
+      120deg,
+      rgba(255,255,255,.24),
+      transparent 45%
+    );
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.card-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 48px;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: #38342e;
+}
+
+.menu-button {
+  position: absolute;
+  right: 0;
+  top: -7px;
+
+  width: 34px;
+  height: 34px;
+
+  border: 1px solid rgba(75,65,52,.12);
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.34);
+
+  color: #454038;
+  font-size: 15px;
+  letter-spacing: 2px;
+
+  cursor: pointer;
+}
+
+/* =========================
+   CLIENT
+========================= */
+
+.client-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+
+  padding-bottom: 34px;
+
+  border-bottom: 1px solid rgba(91,78,60,.08);
+}
+
+.client {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.avatar {
+  width: 51px;
+  height: 51px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #d9d1c4,
+      #aaa092
+    );
+
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.75),
+    0 5px 15px rgba(72,60,45,.12);
+}
+
+.client-label,
+.metric-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 9px;
+  color: #8b8377;
+
+  letter-spacing: .02em;
+}
+
+.client-name {
+  margin: 0;
+
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+
+.average {
+  text-align: right;
+}
+
+.average-value {
+  display: block;
+
+  font-size: 29px;
+  line-height: 1;
+
+  font-weight: 500;
+  letter-spacing: -.06em;
+}
+
+.average-label {
+  font-size: 9px;
+  color: #8b8377;
+}
+
+/* =========================
+   CENTER METRIC
+========================= */
+
+.main-metric {
+  text-align: center;
+  padding: 42px 0 35px;
+}
+
+.metric-label.large {
+  margin-bottom: 9px;
+  font-size: 10px;
+}
+
+.metric-value {
+  font-size: 54px;
+  line-height: 1;
+
+  font-weight: 500;
+
+  letter-spacing: -.08em;
+
+  color: #38332b;
+}
+
+.metric-subtitle {
+  margin-top: 9px;
+
+  font-size: 9px;
+  color: #91887b;
+}
+
+/* =========================
+   MINI BAR CHART
+========================= */
+
+.chart-area {
+  height: 175px;
+
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 0 17px 20px;
+
+  border-bottom: 1px solid rgba(91,78,60,.08);
+}
+
+.bar-column {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+
+  flex: 1;
+}
+
+.bar {
+  width: 17px;
+
+  border-radius: 4px 4px 1px 1px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #d9bf77,
+      #c5a75f
+    );
+
+  box-shadow:
+    0 5px 12px rgba(166,136,69,.12);
+
+  transform-origin: bottom;
+
+  animation: grow .8s ease-out both;
+}
+
+.bar-column:nth-child(1) .bar {
+  height: 42%;
+  animation-delay: .05s;
+}
+
+.bar-column:nth-child(2) .bar {
+  height: 62%;
+  animation-delay: .1s;
+}
+
+.bar-column:nth-child(3) .bar {
+  height: 47%;
+  animation-delay: .15s;
+}
+
+.bar-column:nth-child(4) .bar {
+  height: 73%;
+  animation-delay: .2s;
+}
+
+.bar-column:nth-child(5) .bar {
+  height: 54%;
+  animation-delay: .25s;
+}
+
+.bar-column:nth-child(6) .bar {
+  height: 86%;
+  animation-delay: .3s;
+}
+
+.bar-label {
+  margin-top: 9px;
+
+  font-size: 8px;
+  color: #938a7e;
+}
+
+/* =========================
+   BOTTOM METRICS
+========================= */
+
+.bottom-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  padding-top: 25px;
+}
+
+.bottom-metric {
+  text-align: center;
+}
+
+.bottom-metric + .bottom-metric {
+  border-left: 1px solid rgba(91,78,60,.08);
+}
+
+.bottom-value {
+  display: block;
+
+  margin-top: 4px;
+
+  font-size: 21px;
+  font-weight: 500;
+
+  letter-spacing: -.05em;
+}
+
+.bottom-label {
+  font-size: 8px;
+  color: #91887c;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes grow {
+  from {
+    transform: scaleY(0);
+    opacity: .2;
+  }
+
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+  .glass-card {
+    width: 92vw;
+    min-height: 570px;
+
+    padding: 25px 24px 22px;
+
+    border-radius: 28px;
+  }
+
+  .card-header {
+    margin-bottom: 35px;
+  }
+
+  .client-section {
+    padding-bottom: 27px;
+  }
+
+  .main-metric {
+    padding: 30px 0;
+  }
+
+  .metric-value {
+    font-size: 46px;
+  }
+
+  .chart-area {
+    height: 145px;
+    gap: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .bar {
+    width: 13px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="glass-card">
+
+  <div class="card-header">
+    <h2 class="card-title">True Borrower</h2>
+
+    <button class="menu-button">
+      •••
+    </button>
+  </div>
+
+  <div class="client-section">
+
+    <div class="client">
+
+      <div class="avatar">
+        SA
+      </div>
+
+      <div>
+        <span class="client-label">
+          Borrower
+        </span>
+
+        <h3 class="client-name">
+          Scott A Skaggs
+        </h3>
+      </div>
+
+    </div>
+
+    <div class="average">
+
+      <span class="average-label">
+        Average ROI
+      </span>
+
+      <strong class="average-value">
+        5
+      </strong>
+
+    </div>
+
+  </div>
+
+  <div class="main-metric">
+
+    <span class="metric-label large">
+      Average loan size
+    </span>
+
+    <div class="metric-value">
+      5
+    </div>
+
+    <div class="metric-subtitle">
+      Borrowing
+    </div>
+
+  </div>
+
+  <div class="chart-area">
+
+    <div class="bar-column">
+      <div class="bar"></div>
+      <span class="bar-label">M</span>
+    </div>
+
+    <div class="bar-column">
+      <div class="bar"></div>
+      <span class="bar-label">T</span>
+    </div>
+
+    <div class="bar-column">
+      <div class="bar"></div>
+      <span class="bar-label">W</span>
+    </div>
+
+    <div class="bar-column">
+      <div class="bar"></div>
+      <span class="bar-label">T</span>
+    </div>
+
+    <div class="bar-column">
+      <div class="bar"></div>
+      <span class="bar-label">F</span>
+    </div>
+
+    <div class="bar-column">
+      <div class="bar"></div>
+      <span class="bar-label">S</span>
+    </div>
+
+  </div>
+
+  <div class="bottom-metrics">
+
+    <div class="bottom-metric">
+      <span class="bottom-label">
+        Monthly Payment
+      </span>
+
+      <strong class="bottom-value">
+        $4.2k
+      </strong>
+    </div>
+
+    <div class="bottom-metric">
+      <span class="bottom-label">
+        Rating
+      </span>
+
+      <strong class="bottom-value">
+        5
+      </strong>
+    </div>
+
+    <div class="bottom-metric">
+      <span class="bottom-label">
+        APR
+      </span>
+
+      <strong class="bottom-value">
+        3.72%
+      </strong>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
